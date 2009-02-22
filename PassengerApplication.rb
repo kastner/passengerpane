@@ -105,7 +105,6 @@ class PassengerApplication < NSObject
     (@new_app ? start : restart) unless save_config == false
     # todo: check if it went ok before assuming so.
     @new_app = self.dirty = self.valid = false
-
     true
   end
   
