@@ -64,6 +64,7 @@ class ConfigInstaller
       "  ServerName #{app['host']}",
       ("  ServerAlias #{app['aliases']}" unless app['aliases'].empty?),
       "  DocumentRoot \"#{public_dir}\"",
+	  ("  # publish on bonjour" if app['bonjour']),
       "  #{app['app_type'].capitalize}Env #{app['environment']}",
       (app['user_defined_data'] unless app['user_defined_data'].empty?),
       "</VirtualHost>"

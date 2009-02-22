@@ -105,6 +105,13 @@ class PassengerApplication < NSObject
     (@new_app ? start : restart) unless save_config == false
     # todo: check if it went ok before assuming so.
     @new_app = self.dirty = self.valid = false
+
+	if (@bonjour)
+		args = ['-P', @host.gsub(/.local/, ''), '_http._tcp', '.', 80, @host, '172.16.67.1', '&']
+		NSLog("Command: /usr/bin/dns-sd " + args.join(" "))
+		Kernel.system("/usr/bin/dns-sd #{args.join(" ")}")
+		# execute("/usr/bin/dns-sd", *args)
+	end
     
     true
   end
@@ -112,9 +119,6 @@ class PassengerApplication < NSObject
   def start
     p "Starting Rails application: #{@path}"
     save_config!
-	if (@bonjour)
-		execute('/usr/bin/dns-sd', "-P #{@vhostname.gsub(/.local/,'')} _http._tcp . #{@vhostname} 80 172.16.67.1 ")
-	end
   end
   
   def restart(sender = nil)
@@ -178,7 +182,7 @@ class PassengerApplication < NSObject
       'path' => @path.to_s,
       'environment' => (@environment.nil? ? @custom_environment : (@environment == DEVELOPMENT ? 'development' : 'production')),
       'vhostname' => @vhostname,
-	  'bonjour' => @bonjour
+	  'bonjour' => @bonjour,
       'user_defined_data' => @user_defined_data
     }
   end
@@ -213,6 +217,9 @@ class PassengerApplication < NSObject
     data.gsub!(/<VirtualHost\s(.+?)>/, '')
     self.vhostname = $1
     
+	data.gsub!(/(# publish on bonjour)/, '')
+	self.bonjour = ($1) ? true : false
+	
     data.gsub!(/\s*<\/VirtualHost>\n*/, '').gsub!(/^\n*/, '')
     @user_defined_data = data
   end
@@ -234,7 +241,7 @@ class PassengerApplication < NSObject
       'aliases' => @aliases,
       'path' => @path,
       'environment' => @custom_environment || @environment,
-	  'bonjour' => false
+	  'bonjour' => false,
       'user_defined_data' => @user_defined_data
     }
   end
