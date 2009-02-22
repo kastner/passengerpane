@@ -106,13 +106,6 @@ class PassengerApplication < NSObject
     # todo: check if it went ok before assuming so.
     @new_app = self.dirty = self.valid = false
 
-	if (@bonjour)
-		args = ['-P', @host.gsub(/.local/, ''), '_http._tcp', '.', 80, @host, '172.16.67.1', '&']
-		NSLog("Command: /usr/bin/dns-sd " + args.join(" "))
-		Kernel.system("/usr/bin/dns-sd #{args.join(" ")}")
-		# execute("/usr/bin/dns-sd", *args)
-	end
-    
     true
   end
   
