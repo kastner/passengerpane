@@ -29,6 +29,23 @@ class ConfigInstaller
     end
   end
   
+  def add_to_bonjour(index)
+	# TODO make this use the bonjour API instead of the "dns-sd" command
+  	if (@data[index]['bonjour'])
+		host = @data[index]['host']
+		command = "/usr/bin/dns-sd"
+		ip_addresses.each do |ip|
+			args = ['-P', host.gsub(/.local/, ''), '_http._tcp', '.', 80, host, ip, '&']
+			OSX::NSLog("Command: #{command} #{args.join(" ")}")
+			system("#{command.bypass_safe_level_1} #{args.join(" ").bypass_safe_level_1}")
+		end		
+	end
+  end
+  
+  def ip_addresses
+	`ifconfig | grep "inet " | awk '{print $2}'`.split("\n")
+  end
+  
   def verify_vhost_conf
     unless File.exist? PassengerPaneConfig::PASSENGER_APPS_DIR
       OSX::NSLog("Will create directory: #{PassengerPaneConfig::PASSENGER_APPS_DIR}")
@@ -84,6 +101,7 @@ class ConfigInstaller
     
     (0..(@data.length - 1)).each do |index|
       add_to_hosts index
+	  add_to_bonjour index
       create_vhost_conf index
     end
     
