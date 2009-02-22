@@ -45,7 +45,7 @@ class PassengerApplication < NSObject
     end
   end
   
-  kvc_accessor :host, :path, :aliases, :dirty, :valid, :revertable, :environment
+  kvc_accessor :host, :path, :aliases, :dirty, :valid, :revertable, :environment, :bonjour
   attr_accessor :user_defined_data, :vhostname
   
   def init
@@ -56,6 +56,7 @@ class PassengerApplication < NSObject
       @dirty = @valid = @revertable = false
       @host, @path, @aliases, @user_defined_data = '', '', '', ''
       @vhostname = '*:80'
+	  @bonjour = false
       
       set_original_values!
       self
@@ -111,6 +112,9 @@ class PassengerApplication < NSObject
   def start
     p "Starting Rails application: #{@path}"
     save_config!
+	if (@bonjour)
+		execute('/usr/bin/dns-sd', "-P #{@vhostname.gsub(/.local/,'')} _http._tcp . #{@vhostname} 80 172.16.67.1 ")
+	end
   end
   
   def restart(sender = nil)
@@ -174,6 +178,7 @@ class PassengerApplication < NSObject
       'path' => @path.to_s,
       'environment' => (@environment.nil? ? @custom_environment : (@environment == DEVELOPMENT ? 'development' : 'production')),
       'vhostname' => @vhostname,
+	  'bonjour' => @bonjour
       'user_defined_data' => @user_defined_data
     }
   end
@@ -229,6 +234,7 @@ class PassengerApplication < NSObject
       'aliases' => @aliases,
       'path' => @path,
       'environment' => @custom_environment || @environment,
+	  'bonjour' => false
       'user_defined_data' => @user_defined_data
     }
   end
