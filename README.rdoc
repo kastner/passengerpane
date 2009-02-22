@@ -42,6 +42,9 @@ http://fingertips.lighthouseapp.com/projects/13022
 
 == Changelog
 
+=== v1.2.1
+* Bonjour publishing of hosts. This uses the dns-sd command instead of the API for registration.
+
 === v1.2
 
 * Rack support. Thanks to Kematzy for the original suggestion/work.
