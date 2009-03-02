@@ -276,7 +276,7 @@ describe "PassengerApplication, in general" do
       'path' => passenger_app.path,
       'environment' => 'development',
       'vhostname' => 'het-manfreds-wiki.local:443',
-      'user_defined_data' => "<directory \"/some/path\">\n  foo bar\n</directory>"
+      'user_defined_data' => "  <directory \"#{passenger_app.path}/public\">\n    Order allow,deny\n    Allow from all\n  </directory>"
     }
     
     passenger_app.to_hash.to_yaml.should.not.include 'NSCF'
