@@ -45,9 +45,26 @@ class PassengerApplication < NSObject
     end
   end
   
-  kvc_accessor :host, :path, :aliases, :dirty, :valid, :revertable, :environment, :bonjour
+  kvc_accessor :host, :path, :aliases, :dirty, :valid, :revertable, :environment, :bonjour, :valid_bonjour_host
   attr_accessor :user_defined_data, :vhostname
   
+  def host_with_bonjour_validation(*args)
+    host_without_bonjour_validation(*args)
+    
+    self.valid_bonjour_host = (@host.to_s =~ /\.local\.?$/)
+    
+    # Don't want bonjour to be enabled if not valid, also want to renable if originally set while editing
+    if !@valid_bonjour_host
+      self.bonjour = false
+    else
+      self.bonjour = @bonjour || @original_values['bonjour']
+    end
+    
+    @host
+  end
+  alias_method :host_without_bonjour_validation, :host
+  alias_method :host, :host_with_bonjour_validation
+
   def init
     if super_init
       @environment = DEVELOPMENT
@@ -56,7 +73,8 @@ class PassengerApplication < NSObject
       @dirty = @valid = @revertable = false
       @host, @path, @aliases, @user_defined_data = '', '', '', ''
       @vhostname = '*:80'
-	  @bonjour = false
+      @bonjour = false
+      @valid_bonjour_host = false
       
       set_original_values!
       self
@@ -234,7 +252,7 @@ class PassengerApplication < NSObject
       'aliases' => @aliases,
       'path' => @path,
       'environment' => @custom_environment || @environment,
-	  'bonjour' => false,
+      'bonjour' => @bonjour,
       'user_defined_data' => @user_defined_data
     }
   end

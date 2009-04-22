@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="230"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -951,6 +951,7 @@ dHRwOi8vd3d3Lm1vZHJhaWxzLmNvbSBmb3IgaW5zdGFsbGF0aW9uIGluc3RydWN0aW9ucy4</string>
 					<string>@count</string>
 					<string>aliases</string>
 					<string>bonjour</string>
+					<string>valid_bonjour_host</string>
 				</object>
 				<string key="NSObjectClassName">PassengerApplication</string>
 				<bool key="NSEditable">YES</bool>
@@ -1584,7 +1585,7 @@ dHRwOi8vd3d3Lm1vZHJhaWxzLmNvbSBmb3IgaW5zdGFsbGF0aW9uIGluc3RydWN0aW9ucy4</string>
 						<string key="label">enabled: authorized</string>
 						<reference key="source" ref="884596042"/>
 						<reference key="destination" ref="565115411"/>
-						<object class="NSNibBindingConnector" key="connector">
+						<object class="NSNibBindingConnector" key="connector" id="883710716">
 							<reference key="NSSource" ref="884596042"/>
 							<reference key="NSDestination" ref="565115411"/>
 							<string key="NSLabel">enabled: authorized</string>
@@ -1594,6 +1595,42 @@ dHRwOi8vd3d3Lm1vZHJhaWxzLmNvbSBmb3IgaW5zdGFsbGF0aW9uIGluc3RydWN0aW9ucy4</string>
 						</object>
 					</object>
 					<int key="connectionID">446</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: selection.valid_bonjour_host</string>
+						<reference key="source" ref="884596042"/>
+						<reference key="destination" ref="467003467"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="884596042"/>
+							<reference key="NSDestination" ref="467003467"/>
+							<string key="NSLabel">enabled2: selection.valid_bonjour_host</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">selection.valid_bonjour_host</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSMutableArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<reference ref="7"/>
+									<reference ref="7"/>
+									<reference ref="7"/>
+									<reference ref="7"/>
+									<string>NSIsNotNil</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="883710716"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">454</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2194,8 +2231,8 @@ dHRwOi8vd3d3Lm1vZHJhaWxzLmNvbSBmb3IgaW5zdGFsbGF0aW9uIGluc3RydWN0aW9ucy4</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{100, 407}, {668, 438}}</string>
-					<string>{{100, 407}, {668, 438}}</string>
+					<string>{{-8, 441}, {668, 438}}</string>
+					<string>{{-8, 441}, {668, 438}}</string>
 					<reference ref="9"/>
 					<string>{{-5, 388}, {668, 438}}</string>
 					<boolean value="NO"/>
@@ -2292,7 +2329,7 @@ dHRwOi8vd3d3Lm1vZHJhaWxzLmNvbSBmb3IgaW5zdGFsbGF0aW9uIGluc3RydWN0aW9ucy4</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">446</int>
+			<int key="maxID">454</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
