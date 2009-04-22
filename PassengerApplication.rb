@@ -152,7 +152,7 @@ class PassengerApplication < NSObject
   end
   
   def reload!
-    return if new_app?
+    return if new_app? || (@mtime && @mtime >= File.mtime(config_path))
     load_data_from_vhost_file
     mark_dirty! if values_changed_after_load?
     set_original_values!
@@ -166,7 +166,7 @@ class PassengerApplication < NSObject
   end
   
   def config_path
-    File.join(PassengerPaneConfig::PASSENGER_APPS_DIR, "#{@host}.#{PassengerPaneConfig::PASSENGER_APPS_EXTENSION}")
+    File.join(PassengerPaneConfig::PASSENGER_APPS_DIR, "#{@original_values['host'] || @host}.#{PassengerPaneConfig::PASSENGER_APPS_EXTENSION}")
   end
   
   def rbSetValue_forKey(value, key)
@@ -206,6 +206,7 @@ class PassengerApplication < NSObject
   end
   
   def load_data_from_vhost_file(file = config_path)
+    @mtime = File.mtime(file)
     data = File.read(file).strip
     
     data.gsub!(/\n\s*ServerName\s+(.+)/, '')
